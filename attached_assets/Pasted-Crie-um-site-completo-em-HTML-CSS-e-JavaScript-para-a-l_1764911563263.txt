@@ -1,0 +1,102 @@
+Crie um site completo em HTML, CSS e JavaScript para a loja "MME Modas".  
+A loja vende roupas masculinas e também tem uma barbearia.  
+Quero um site moderno, responsivo, bonito e com animações.
+
+=========================
+INFORMAÇÕES OBRIGATÓRIAS
+=========================
+
+NOME DA LOJA: MME Modas  
+CORES DO TEMA: Preto (#000), Vermelho (#e50914), Branco (#ffffff)  
+ESTILO: Masculino, moderno, elegante, clean, com animações suaves ao rolar a página  
+TIPOGRAFIA: Usar "Poppins" ou "Montserrat"  
+LAYOUT: Tela cheia, seções bem separadas, aparência premium
+
+=========================
+PÁGINAS / SEÇÕES
+=========================
+
+1) **HEADER + NAVBAR**
+- Navbar fixa no topo  
+- Botões: Home, Moda Masculina, Barbearia, Agendamento, Contato  
+- Logo “MME Modas” estilizado em branco com detalhe vermelho  
+- Fundo preto semitransparente
+
+2) **HERO (capa inicial)**
+- Imagem de fundo masculina estilosa (usar links de imagens livres)  
+- Título grande: “MME Modas”
+- Subtítulo: “Moda Masculina & Barbearia Premium”
+- Botões: “Ver Roupas” (ancorar para produtos) e “Agendar Corte” (ancorar para barbearia)
+- Overlay escuro para contraste
+
+3) **SEÇÃO DE ROUPAS MASCULINAS**
+- Grade de produtos  
+- Cada card com:
+  - Imagem de produto
+  - Nome
+  - Preço
+  - Botão “Comprar”
+- Estilo preto/vermelho/branco, cantos arredondados, hover com animação
+
+4) **SEÇÃO BARBEARIA**
+- Fotos chamativas da barbearia  
+- Texto chamativo:
+  - “Cortes modernos, barba alinhada, atendimento premium.”  
+- Cards de serviços:
+  - Corte Masculino
+  - Barba Completa
+  - Pacote Corte + Barba
+  - Sobrancelha  
+- Cada card com preço e botão “Agendar”
+
+5) **SEÇÃO DE AGENDAMENTO**
+Criar formulário funcional:
+- Nome  
+- Telefone  
+- Serviço (select)  
+- Data  
+- Horário  
+- Botão “Agendar”  
+→ Quando enviar, mostrar mensagem de sucesso em modal.
+
+6) **SEÇÃO CONTATO**
+- Endereço da loja
+- Horário de funcionamento
+- Telefone / WhatsApp
+- Mapa incorporado (Google Maps embed)
+
+7) **RODAPÉ**
+- Logo MME Modas
+- Redes sociais
+- Direitos autorais
+
+=========================
+EFEITOS E ANIMAÇÕES
+=========================
+- Animação de fade-in ao rolar (JS simples)
+- Hover vermelho nos botões
+- Cursor personalizado:
+  - Cursor redondo branco com borda vermelha
+  - Aumenta quando passa em cima de links e botões
+
+=========================
+ARQUIVOS
+=========================
+Gerar:
+- index.html
+- style.css
+- script.js
+
+=========================
+EXIGÊNCIAS VISUAIS
+=========================
+- Tema escuro predominante
+- Vermelho apenas para botões, destaques, preços e detalhes
+- Site 100% responsivo
+- Estilo premium e limpo
+
+=========================
+OBJETIVO
+=========================
+Quero um site pronto, bonito, estiloso, moderno e já funcionando no Replit.
+Gere exatamente os três arquivos completos com o código final.

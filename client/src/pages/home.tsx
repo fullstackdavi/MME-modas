@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, memo, useCallback, useMemo } from "react";
 import logoImage from "@assets/generated_images/mme_modas_letters_only_transparent.png";
 import agendamentoImage from "@assets/image_1764960192255.png";
 import { Button } from "@/components/ui/button";
@@ -52,12 +52,25 @@ import type { Product, BarberService, InsertAppointment, GalleryImage } from "@s
 import { insertAppointmentSchema } from "@shared/schema";
 import { useCart } from "@/lib/cart-context";
 
-const barberServices: BarberService[] = [
+const BARBER_SERVICES: readonly BarberService[] = Object.freeze([
   { id: "1", name: "Corte Masculino", price: 45.00, description: "Corte moderno com acabamento perfeito", icon: "scissors" },
   { id: "2", name: "Barba Completa", price: 35.00, description: "Barba alinhada com toalha quente", icon: "beard" },
   { id: "3", name: "Corte + Barba", price: 70.00, description: "Pacote completo com desconto", icon: "package" },
   { id: "4", name: "Sobrancelha", price: 15.00, description: "Design de sobrancelha masculina", icon: "eyebrow" },
-];
+]);
+
+const NAV_ITEMS = Object.freeze([
+  { label: "Home", id: "hero" },
+  { label: "Moda Masculina", id: "produtos" },
+  { label: "Barbearia", id: "barbearia" },
+  { label: "Galeria", id: "galeria" },
+  { label: "Agendamento", id: "agendamento" },
+  { label: "Contato", id: "contato" },
+]);
+
+const VIDEO_POSTER_MOBILE = "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&h=600&fit=crop&q=75";
+const VIDEO_POSTER_DESKTOP = "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=1920&h=1080&fit=crop&q=80";
+const VIDEO_SRC = "https://cdn.pixabay.com/video/2016/05/12/3125-166335844_large.mp4";
 
 const appointmentFormSchema = insertAppointmentSchema.extend({
   name: z.string().min(2, "Nome deve ter pelo menos 2 caracteres"),
@@ -102,22 +115,13 @@ function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (id: string) => {
+  const scrollToSection = useCallback((id: string) => {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
     setIsOpen(false);
-  };
-
-  const navItems = [
-    { label: "Home", id: "hero" },
-    { label: "Moda Masculina", id: "produtos" },
-    { label: "Barbearia", id: "barbearia" },
-    { label: "Galeria", id: "galeria" },
-    { label: "Agendamento", id: "agendamento" },
-    { label: "Contato", id: "contato" },
-  ];
+  }, []);
 
   return (
     <nav
@@ -137,11 +141,13 @@ function Navbar() {
               src={logoImage} 
               alt="MME Modas" 
               className="h-14 md:h-16 w-auto object-contain"
+              loading="eager"
+              decoding="async"
             />
           </button>
 
           <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item) => (
+            {NAV_ITEMS.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
@@ -188,7 +194,7 @@ function Navbar() {
         }`}
       >
         <div className="px-4 py-4 space-y-2">
-          {navItems.map((item) => (
+          {NAV_ITEMS.map((item) => (
             <button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
@@ -204,19 +210,23 @@ function Navbar() {
   );
 }
 
-function HeroSection() {
+const HeroSection = memo(function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isIOS, setIsIOS] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
     const checkIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
       (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     setIsIOS(checkIOS);
+    setIsMobile(window.innerWidth < 768);
+    setPrefersReducedMotion(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   }, []);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || prefersReducedMotion) return;
 
     const playVideo = async () => {
       try {
@@ -241,7 +251,7 @@ function HeroSection() {
     return () => {
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, []);
+  }, [prefersReducedMotion]);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -257,24 +267,33 @@ function HeroSection() {
       style={isIOS ? { minHeight: '-webkit-fill-available' } : undefined}
       data-testid="section-hero"
     >
-      <video
-        ref={videoRef}
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        poster="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=1920&h=1080&fit=crop"
-        className="absolute inset-0 w-full h-full object-cover"
-        style={isIOS ? { 
-          WebkitTransform: 'translateZ(0)',
-          minHeight: '-webkit-fill-available',
-          height: '100%',
-          objectFit: 'cover'
-        } : { WebkitTransform: 'translateZ(0)' }}
-      >
-        <source src="https://cdn.pixabay.com/video/2016/05/12/3125-166335844_large.mp4" type="video/mp4" />
-      </video>
+      {!prefersReducedMotion && (
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          poster={isMobile ? VIDEO_POSTER_MOBILE : VIDEO_POSTER_DESKTOP}
+          className="absolute inset-0 w-full h-full object-cover"
+          style={isIOS ? { 
+            WebkitTransform: 'translateZ(0)',
+            minHeight: '-webkit-fill-available',
+            height: '100%',
+            objectFit: 'cover'
+          } : { WebkitTransform: 'translateZ(0)' }}
+        >
+          <source src={VIDEO_SRC} type="video/mp4" />
+        </video>
+      )}
+      {prefersReducedMotion && (
+        <img 
+          src={isMobile ? VIDEO_POSTER_MOBILE : VIDEO_POSTER_DESKTOP}
+          alt="MME Modas"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      )}
       <div 
         className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/80"
         style={isIOS ? { minHeight: '-webkit-fill-available' } : undefined}
@@ -315,9 +334,9 @@ function HeroSection() {
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background via-background/50 to-transparent backdrop-blur-sm" />
     </section>
   );
-}
+});
 
-function ProductCard({ product }: { product: Product }) {
+const ProductCard = memo(function ProductCard({ product }: { product: Product }) {
   const { addItem } = useCart();
 
   return (
@@ -328,6 +347,7 @@ function ProductCard({ product }: { product: Product }) {
           alt={product.name}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           loading="lazy"
+          decoding="async"
         />
       </div>
       <div className="p-4">
@@ -344,9 +364,9 @@ function ProductCard({ product }: { product: Product }) {
       </div>
     </Card>
   );
-}
+});
 
-function ProductsSection() {
+const ProductsSection = memo(function ProductsSection() {
   const { data: products, isLoading } = useQuery<Product[]>({
     queryKey: ["/api/products"],
   });
@@ -377,9 +397,9 @@ function ProductsSection() {
       </div>
     </section>
   );
-}
+});
 
-function ServiceCard({ service, onSchedule }: { service: BarberService; onSchedule: () => void }) {
+const ServiceCard = memo(function ServiceCard({ service, onSchedule }: { service: BarberService; onSchedule: () => void }) {
   const getIcon = () => {
     switch (service.icon) {
       case "scissors":
@@ -410,9 +430,9 @@ function ServiceCard({ service, onSchedule }: { service: BarberService; onSchedu
       </Button>
     </Card>
   );
-}
+});
 
-function BarberSection() {
+const BarberSection = memo(function BarberSection() {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -461,34 +481,37 @@ function BarberSection() {
                 alt="Barbearia MME"
                 className="rounded-lg w-full h-48 object-cover"
                 loading="lazy"
-              />
+              decoding="async"
+            />
               <img
                 src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=400&h=300&fit=crop"
                 alt="Corte de cabelo"
                 className="rounded-lg w-full h-48 object-cover"
                 loading="lazy"
-              />
+              decoding="async"
+            />
               <img
                 src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=400&h=300&fit=crop"
                 alt="Barba"
                 className="rounded-lg w-full h-48 object-cover col-span-2"
                 loading="lazy"
-              />
+              decoding="async"
+            />
             </div>
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {barberServices.map((service) => (
+          {BARBER_SERVICES.map((service) => (
             <ServiceCard key={service.id} service={service} onSchedule={() => scrollToSection("agendamento")} />
           ))}
         </div>
       </div>
     </section>
   );
-}
+});
 
-function GallerySection() {
+const GallerySection = memo(function GallerySection() {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const { data: images, isLoading } = useQuery<GalleryImage[]>({
     queryKey: ["/api/gallery"],
@@ -539,6 +562,7 @@ function GallerySection() {
                     alt={image.title}
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     loading="lazy"
+                    decoding="async"
                   />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-end">
                     <span className="text-white font-medium p-4 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -560,6 +584,7 @@ function GallerySection() {
                 src={selectedImage.image}
                 alt={selectedImage.title}
                 className="w-full h-auto max-h-[80vh] object-contain"
+                decoding="async"
               />
             )}
             <Button
@@ -588,9 +613,9 @@ function GallerySection() {
       </Dialog>
     </section>
   );
-}
+});
 
-function BookingSection() {
+const BookingSection = memo(function BookingSection() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [selectedDate, setSelectedDate] = useState("");
   
@@ -712,7 +737,7 @@ function BookingSection() {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {barberServices.map((service) => (
+                        {BARBER_SERVICES.map((service) => (
                           <SelectItem key={service.id} value={service.name}>
                             {service.name} - R$ {service.price.toFixed(2).replace(".", ",")}
                           </SelectItem>
@@ -838,9 +863,9 @@ function BookingSection() {
       </Dialog>
     </section>
   );
-}
+});
 
-function ContactSection() {
+const ContactSection = memo(function ContactSection() {
   const openWhatsApp = () => {
     window.open("https://wa.me/5535987116814?text=Olá! Gostaria de mais informações sobre a MME Modas.", "_blank");
   };
@@ -928,9 +953,9 @@ function ContactSection() {
       </div>
     </section>
   );
-}
+});
 
-function Footer() {
+const Footer = memo(function Footer() {
   const openWhatsApp = () => {
     window.open("https://wa.me/5535987116814", "_blank");
   };
@@ -969,7 +994,7 @@ function Footer() {
       </div>
     </footer>
   );
-}
+});
 
 export default function Home() {
   useScrollAnimation();

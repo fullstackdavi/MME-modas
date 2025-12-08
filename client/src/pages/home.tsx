@@ -84,18 +84,24 @@ type AppointmentFormData = InsertAppointment;
 
 function useScrollAnimation() {
   useEffect(() => {
+    const elements = document.querySelectorAll(".fade-up");
+    if (!elements.length) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add("animate-in");
+            requestAnimationFrame(() => {
+              entry.target.classList.add("animate-in");
+            });
+            observer.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+      { threshold: 0.05, rootMargin: "0px 0px -20px 0px" }
     );
 
-    document.querySelectorAll(".fade-up").forEach((el) => observer.observe(el));
+    elements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
   }, []);
@@ -300,7 +306,7 @@ const HeroSection = memo(function HeroSection() {
       />
 
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-        <div className="fade-up opacity-0 translate-y-8 transition-all duration-700">
+        <div className="fade-up opacity-0 translate-y-4 transition-all duration-500 will-change-transform">
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 tracking-tight">
             MME Modas
           </h1>
@@ -374,7 +380,7 @@ const ProductsSection = memo(function ProductsSection() {
   return (
     <section id="produtos" className="py-20 md:py-28 bg-background" data-testid="section-produtos">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 md:mb-16 fade-up opacity-0 translate-y-8 transition-all duration-700">
+        <div className="text-center mb-12 md:mb-16 fade-up opacity-0 translate-y-4 transition-all duration-500 will-change-transform">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
             Moda <span className="text-primary">Masculina</span>
           </h2>
@@ -455,7 +461,7 @@ const BarberSection = memo(function BarberSection() {
       <div className="absolute inset-0 bg-black/60" />
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
-          <div className="fade-up opacity-0 translate-y-8 transition-all duration-700">
+          <div className="fade-up opacity-0 translate-y-4 transition-all duration-500 will-change-transform">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6">
               Barbearia <span className="text-primary">Premium</span>
             </h2>
@@ -474,7 +480,7 @@ const BarberSection = memo(function BarberSection() {
               </div>
             </div>
           </div>
-          <div className="fade-up opacity-0 translate-y-8 transition-all duration-700" style={{ transitionDelay: "200ms" }}>
+          <div className="fade-up opacity-0 translate-y-4 transition-all duration-500 will-change-transform" style={{ transitionDelay: "100ms" }}>
             <div className="grid grid-cols-2 gap-4">
               <img
                 src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=400&h=300&fit=crop"
@@ -534,7 +540,7 @@ const GallerySection = memo(function GallerySection() {
   return (
     <section id="galeria" className="py-20 md:py-28 bg-background" data-testid="section-galeria">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 md:mb-16 fade-up opacity-0 translate-y-8 transition-all duration-700">
+        <div className="text-center mb-12 md:mb-16 fade-up opacity-0 translate-y-4 transition-all duration-500 will-change-transform">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
             Nossa <span className="text-primary">Galeria</span>
           </h2>
@@ -873,7 +879,7 @@ const ContactSection = memo(function ContactSection() {
   return (
     <section id="contato" className="py-20 md:py-28 bg-secondary/30" data-testid="section-contato">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 fade-up opacity-0 translate-y-8 transition-all duration-700">
+        <div className="text-center mb-12 fade-up opacity-0 translate-y-4 transition-all duration-500 will-change-transform">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
             Entre em <span className="text-primary">Contato</span>
           </h2>
@@ -883,7 +889,7 @@ const ContactSection = memo(function ContactSection() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
-          <div className="fade-up opacity-0 translate-y-8 transition-all duration-700 space-y-8">
+          <div className="fade-up opacity-0 translate-y-4 transition-all duration-500 will-change-transform space-y-8">
             <Card className="overflow-visible p-6 bg-card border-card-border">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary shrink-0">
@@ -934,7 +940,7 @@ const ContactSection = memo(function ContactSection() {
             </Card>
           </div>
 
-          <div className="fade-up opacity-0 translate-y-8 transition-all duration-700" style={{ transitionDelay: "200ms" }}>
+          <div className="fade-up opacity-0 translate-y-4 transition-all duration-500 will-change-transform" style={{ transitionDelay: "100ms" }}>
             <Card className="overflow-hidden h-full min-h-[400px] bg-card border-card-border">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3712.0!2d-45.43!3d-21.55!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sRua%20Wellington%20Pereira%2C%20168%20-%20Vila%20Floresta%2C%20Varginha%20-%20MG!5e0!3m2!1spt-BR!2sbr!4v1701234567890!5m2!1spt-BR!2sbr"

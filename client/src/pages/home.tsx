@@ -405,17 +405,63 @@ const ProductsSection = memo(function ProductsSection() {
   );
 });
 
+const HaircutIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <circle cx="6" cy="6" r="3" />
+    <path d="M6 9v12" />
+    <path d="M12 3c-2 4-2 8 0 12" />
+    <circle cx="18" cy="6" r="3" />
+    <path d="M18 9v12" />
+    <path d="M6 21l6-6 6 6" />
+  </svg>
+);
+
+const BeardIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M12 2C8.5 2 6 4.5 6 7v2c0 1.5-.5 3-2 4v1c0 4 3 8 8 8s8-4 8-8v-1c-1.5-1-2-2.5-2-4V7c0-2.5-2.5-5-6-5z" />
+    <path d="M9 10c0 1 .5 2 1.5 2.5" />
+    <path d="M15 10c0 1-.5 2-1.5 2.5" />
+    <path d="M12 14v4" />
+    <path d="M9 18c1 1 2 1.5 3 1.5s2-.5 3-1.5" />
+  </svg>
+);
+
+const HaircutBeardIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <circle cx="5" cy="4" r="2" />
+    <circle cx="9" cy="4" r="2" />
+    <path d="M5 6v4l2 2 2-2V6" />
+    <path d="M14 2c-2 0-3.5 1.5-3.5 3v1c0 1-.3 2-1.5 3v.5c0 3 2 6 5 6s5-3 5-6v-.5c-1.2-1-1.5-2-1.5-3V5c0-1.5-1.5-3-3.5-3z" />
+    <path d="M12.5 8c0 .5.25 1 .75 1.25" />
+    <path d="M15.5 8c0 .5-.25 1-.75 1.25" />
+    <path d="M14 10v2.5" />
+    <path d="M12 13c.6.6 1.2 1 2 1s1.4-.4 2-1" />
+  </svg>
+);
+
+const EyebrowIcon = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M3 9c2-3 5-4 9-4s7 1 9 4" />
+    <path d="M5 8c1.5-1.5 3.5-2 5-2" />
+    <circle cx="12" cy="14" r="4" />
+    <circle cx="12" cy="14" r="1.5" />
+    <path d="M19 8c-1.5-1.5-3.5-2-5-2" />
+  </svg>
+);
+
 const ServiceCard = memo(function ServiceCard({ service, onSchedule }: { service: BarberService; onSchedule: () => void }) {
   const getIcon = () => {
     switch (service.icon) {
       case "scissors":
-        return <Scissors className="w-8 h-8" />;
+        return <HaircutIcon className="w-8 h-8" />;
       case "beard":
-        return <Scissors className="w-8 h-8 rotate-45" />;
+        return <BeardIcon className="w-8 h-8" />;
       case "package":
-        return <ShoppingBag className="w-8 h-8" />;
+        return <HaircutBeardIcon className="w-8 h-8" />;
+      case "eyebrow":
+        return <EyebrowIcon className="w-8 h-8" />;
       default:
-        return <Scissors className="w-8 h-8" />;
+        return <HaircutIcon className="w-8 h-8" />;
     }
   };
 

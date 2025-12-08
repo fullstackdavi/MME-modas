@@ -449,13 +449,10 @@ const BarberSection = memo(function BarberSection() {
   return (
     <section 
       id="barbearia" 
-      className="py-20 md:py-28 relative" 
+      className="py-20 md:py-28 relative section-bg-responsive section-bg-barber" 
       data-testid="section-barbearia"
       style={{
         backgroundImage: `url(https://cdn.pixabay.com/photo/2023/09/15/04/25/clipper-8254064_1280.jpg)`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
       }}
     >
       <div className="absolute inset-0 bg-black/60" />
@@ -671,13 +668,10 @@ const BookingSection = memo(function BookingSection() {
   return (
     <section 
       id="agendamento" 
-      className="py-20 md:py-28 relative" 
+      className="py-20 md:py-28 relative section-bg-responsive section-bg-booking" 
       data-testid="section-agendamento"
       style={{
         backgroundImage: `url(${agendamentoImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
       }}
     >
       <div className="absolute inset-0 bg-black/70" />

@@ -286,3 +286,26 @@
     inset: -1px;
   }
 }
+
+/* Responsive background sections for mobile */
+.section-bg-responsive {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 767px) {
+  .section-bg-responsive {
+    background-size: cover;
+    background-position: center top;
+    background-attachment: scroll;
+  }
+  
+  .section-bg-barber {
+    background-position: 65% center;
+  }
+  
+  .section-bg-booking {
+    background-position: center center;
+  }
+}

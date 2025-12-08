@@ -295,26 +295,56 @@
   background-attachment: scroll;
 }
 
-@media (max-width: 767px) {
-  .section-bg-barber {
-    background-size: auto 100%;
-    background-position: 60% center;
-  }
-  
+/* Desktop: cover para preencher toda a seção */
+@media (min-width: 1024px) {
+  .section-bg-barber,
   .section-bg-booking {
-    background-size: auto 100%;
-    background-position: 40% center;
+    background-size: cover;
+    background-position: center center;
   }
 }
 
-@media (max-width: 480px) {
+/* Tablet: ajusta para mostrar mais do background */
+@media (max-width: 1023px) and (min-width: 768px) {
   .section-bg-barber {
-    background-size: auto 100%;
-    background-position: 55% center;
+    background-size: contain;
+    background-position: center top;
+    background-color: hsl(var(--background));
   }
   
   .section-bg-booking {
-    background-size: auto 100%;
-    background-position: 35% center;
+    background-size: contain;
+    background-position: center top;
+    background-color: hsl(var(--background));
+  }
+}
+
+/* Mobile: mostra o background inteiro redimensionado */
+@media (max-width: 767px) {
+  .section-bg-barber {
+    background-size: contain;
+    background-position: center top;
+    background-color: hsl(var(--background));
+  }
+  
+  .section-bg-booking {
+    background-size: contain;
+    background-position: center top;
+    background-color: hsl(var(--background));
+  }
+}
+
+/* Mobile pequeno: mesma abordagem */
+@media (max-width: 480px) {
+  .section-bg-barber {
+    background-size: contain;
+    background-position: center top;
+    background-color: hsl(var(--background));
+  }
+  
+  .section-bg-booking {
+    background-size: contain;
+    background-position: center top;
+    background-color: hsl(var(--background));
   }
 }

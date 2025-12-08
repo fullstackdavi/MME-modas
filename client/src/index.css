@@ -304,47 +304,22 @@
   }
 }
 
-/* Tablet: ajusta para mostrar mais do background */
-@media (max-width: 1023px) and (min-width: 768px) {
-  .section-bg-barber {
-    background-size: contain;
-    background-position: center top;
-    background-color: hsl(var(--background));
-  }
-  
+/* Tablet e Mobile: imagem bem visível */
+@media (max-width: 1023px) {
+  .section-bg-barber,
   .section-bg-booking {
-    background-size: contain;
-    background-position: center top;
-    background-color: hsl(var(--background));
+    background-size: 100% auto;
+    background-position: top center;
+    background-repeat: no-repeat;
   }
 }
 
-/* Mobile: mostra o background inteiro redimensionado */
-@media (max-width: 767px) {
-  .section-bg-barber {
-    background-size: contain;
-    background-position: center top;
-    background-color: hsl(var(--background));
-  }
-  
+/* Mobile pequeno: imagem um pouco maior para melhor visualização */
+@media (max-width: 640px) {
+  .section-bg-barber,
   .section-bg-booking {
-    background-size: contain;
-    background-position: center top;
-    background-color: hsl(var(--background));
-  }
-}
-
-/* Mobile pequeno: mesma abordagem */
-@media (max-width: 480px) {
-  .section-bg-barber {
-    background-size: contain;
-    background-position: center top;
-    background-color: hsl(var(--background));
-  }
-  
-  .section-bg-booking {
-    background-size: contain;
-    background-position: center top;
-    background-color: hsl(var(--background));
+    background-size: 130% auto;
+    background-position: top center;
+    background-repeat: no-repeat;
   }
 }

@@ -408,44 +408,42 @@ const ProductsSection = memo(function ProductsSection() {
 const HaircutIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
     <circle cx="6" cy="6" r="3" />
-    <path d="M6 9v12" />
-    <path d="M12 3c-2 4-2 8 0 12" />
     <circle cx="18" cy="6" r="3" />
-    <path d="M18 9v12" />
-    <path d="M6 21l6-6 6 6" />
+    <path d="M8.12 8.12L12 12" />
+    <path d="M15.88 8.12L12 12" />
+    <path d="M12 12v6" />
+    <path d="M9 18h6" />
   </svg>
 );
 
 const BeardIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <path d="M12 2C8.5 2 6 4.5 6 7v2c0 1.5-.5 3-2 4v1c0 4 3 8 8 8s8-4 8-8v-1c-1.5-1-2-2.5-2-4V7c0-2.5-2.5-5-6-5z" />
-    <path d="M9 10c0 1 .5 2 1.5 2.5" />
-    <path d="M15 10c0 1-.5 2-1.5 2.5" />
-    <path d="M12 14v4" />
-    <path d="M9 18c1 1 2 1.5 3 1.5s2-.5 3-1.5" />
+    <ellipse cx="12" cy="8" rx="6" ry="5" />
+    <path d="M6 10c0 6 2 10 6 12 4-2 6-6 6-12" />
+    <path d="M8 10v2c0 2 1.5 4 4 5 2.5-1 4-3 4-5v-2" />
+    <circle cx="9" cy="7" r="0.5" fill="currentColor" />
+    <circle cx="15" cy="7" r="0.5" fill="currentColor" />
   </svg>
 );
 
 const HaircutBeardIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <circle cx="5" cy="4" r="2" />
-    <circle cx="9" cy="4" r="2" />
-    <path d="M5 6v4l2 2 2-2V6" />
-    <path d="M14 2c-2 0-3.5 1.5-3.5 3v1c0 1-.3 2-1.5 3v.5c0 3 2 6 5 6s5-3 5-6v-.5c-1.2-1-1.5-2-1.5-3V5c0-1.5-1.5-3-3.5-3z" />
-    <path d="M12.5 8c0 .5.25 1 .75 1.25" />
-    <path d="M15.5 8c0 .5-.25 1-.75 1.25" />
-    <path d="M14 10v2.5" />
-    <path d="M12 13c.6.6 1.2 1 2 1s1.4-.4 2-1" />
+    <circle cx="4" cy="4" r="2" />
+    <circle cx="10" cy="4" r="2" />
+    <path d="M6 5.5L7 8" />
+    <path d="M8 5.5L7 8" />
+    <ellipse cx="17" cy="9" rx="4" ry="3.5" />
+    <path d="M13 11c0 4 1.5 7 4 8.5 2.5-1.5 4-4.5 4-8.5" />
+    <circle cx="15.5" cy="8.5" r="0.5" fill="currentColor" />
+    <circle cx="18.5" cy="8.5" r="0.5" fill="currentColor" />
   </svg>
 );
 
 const EyebrowIcon = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <path d="M3 9c2-3 5-4 9-4s7 1 9 4" />
-    <path d="M5 8c1.5-1.5 3.5-2 5-2" />
-    <circle cx="12" cy="14" r="4" />
-    <circle cx="12" cy="14" r="1.5" />
-    <path d="M19 8c-1.5-1.5-3.5-2-5-2" />
+    <path d="M3 10c3-4 6-5 9-5s6 1 9 5" strokeWidth="2.5" />
+    <path d="M6 14l4 4 6-8" />
+    <circle cx="16" cy="10" r="1" fill="currentColor" />
   </svg>
 );
 

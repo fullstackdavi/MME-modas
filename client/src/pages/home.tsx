@@ -206,6 +206,13 @@ function Navbar() {
 
 function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [isIOS, setIsIOS] = useState(false);
+
+  useEffect(() => {
+    const checkIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    setIsIOS(checkIOS);
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -247,6 +254,7 @@ function HeroSection() {
     <section
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      style={isIOS ? { minHeight: '-webkit-fill-available' } : undefined}
       data-testid="section-hero"
     >
       <video
@@ -258,11 +266,19 @@ function HeroSection() {
         preload="auto"
         poster="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=1920&h=1080&fit=crop"
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ WebkitTransform: 'translateZ(0)' }}
+        style={isIOS ? { 
+          WebkitTransform: 'translateZ(0)',
+          minHeight: '-webkit-fill-available',
+          height: '100%',
+          objectFit: 'cover'
+        } : { WebkitTransform: 'translateZ(0)' }}
       >
-        <source src="https://cdn.pixabay.com/video/2016/05/12/3126-166335859_large.mp4" type="video/mp4" />
+        <source src="https://cdn.pixabay.com/video/2016/05/12/3125-166335844_large.mp4" type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/80" />
+      <div 
+        className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/80"
+        style={isIOS ? { minHeight: '-webkit-fill-available' } : undefined}
+      />
 
       <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
         <div className="fade-up opacity-0 translate-y-8 transition-all duration-700">

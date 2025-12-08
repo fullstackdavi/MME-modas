@@ -290,22 +290,31 @@
 /* Responsive background sections for mobile */
 .section-bg-responsive {
   background-size: cover;
-  background-position: center;
+  background-position: center center;
   background-repeat: no-repeat;
+  background-attachment: scroll;
 }
 
 @media (max-width: 767px) {
-  .section-bg-responsive {
-    background-size: cover;
-    background-position: center top;
-    background-attachment: scroll;
-  }
-  
   .section-bg-barber {
-    background-position: 65% center;
+    background-size: auto 100%;
+    background-position: 60% center;
   }
   
   .section-bg-booking {
-    background-position: center center;
+    background-size: auto 100%;
+    background-position: 40% center;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-bg-barber {
+    background-size: auto 100%;
+    background-position: 55% center;
+  }
+  
+  .section-bg-booking {
+    background-size: auto 100%;
+    background-position: 35% center;
   }
 }

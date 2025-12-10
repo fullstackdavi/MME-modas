@@ -376,6 +376,17 @@ const ProductsSection = memo(function ProductsSection() {
   const { data: products, isLoading } = useQuery<Product[]>({
     queryKey: ["/api/products"],
   });
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollRef.current) {
+      const scrollAmount = 320;
+      scrollRef.current.scrollBy({
+        left: direction === 'left' ? -scrollAmount : scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   return (
     <section id="produtos" className="py-20 md:py-28 bg-background" data-testid="section-produtos">
@@ -394,12 +405,37 @@ const ProductsSection = memo(function ProductsSection() {
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
           </div>
         ) : (
-          <div className="overflow-x-auto pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 scrollbar-thin">
-            <div className="flex gap-6 md:gap-8 w-max">
-              {products?.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
+          <div className="relative">
+            <Button
+              size="icon"
+              variant="outline"
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 z-10 bg-background/90 backdrop-blur-sm border-border shadow-lg hidden sm:flex"
+              onClick={() => scroll('left')}
+              data-testid="button-scroll-left"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </Button>
+            
+            <div 
+              ref={scrollRef}
+              className="overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
+            >
+              <div className="flex gap-6 md:gap-8 w-max px-2">
+                {products?.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
             </div>
+            
+            <Button
+              size="icon"
+              variant="outline"
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 z-10 bg-background/90 backdrop-blur-sm border-border shadow-lg hidden sm:flex"
+              onClick={() => scroll('right')}
+              data-testid="button-scroll-right"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </Button>
           </div>
         )}
       </div>

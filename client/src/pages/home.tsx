@@ -391,13 +391,35 @@ const ProductsSection = memo(function ProductsSection() {
   return (
     <section id="produtos" className="py-20 md:py-28 bg-background" data-testid="section-produtos">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 md:mb-16 fade-up opacity-0 translate-y-4 transition-all duration-500 will-change-transform">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Moda <span className="text-primary">Masculina</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Roupas de alta qualidade para o homem moderno. Estilo e conforto em cada peça.
-          </p>
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-12 md:mb-16 fade-up opacity-0 translate-y-4 transition-all duration-500 will-change-transform">
+          <div className="text-center sm:text-left">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
+              Moda <span className="text-primary">Masculina</span>
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl">
+              Roupas de alta qualidade para o homem moderno. Estilo e conforto em cada peça.
+            </p>
+          </div>
+          <div className="flex gap-2 justify-center sm:justify-end">
+            <Button
+              size="icon"
+              variant="outline"
+              className="bg-background/90 backdrop-blur-sm border-border"
+              onClick={() => scroll('left')}
+              data-testid="button-scroll-left"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </Button>
+            <Button
+              size="icon"
+              variant="outline"
+              className="bg-background/90 backdrop-blur-sm border-border"
+              onClick={() => scroll('right')}
+              data-testid="button-scroll-right"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </Button>
+          </div>
         </div>
 
         {isLoading ? (
@@ -405,37 +427,15 @@ const ProductsSection = memo(function ProductsSection() {
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
           </div>
         ) : (
-          <div className="relative">
-            <Button
-              size="icon"
-              variant="outline"
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 z-10 bg-background/90 backdrop-blur-sm border-border shadow-lg hidden sm:flex"
-              onClick={() => scroll('left')}
-              data-testid="button-scroll-left"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </Button>
-            
-            <div 
-              ref={scrollRef}
-              className="overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
-            >
-              <div className="flex gap-6 md:gap-8 w-max px-2">
-                {products?.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
+          <div 
+            ref={scrollRef}
+            className="overflow-x-auto pb-4 scrollbar-hide scroll-smooth"
+          >
+            <div className="flex gap-6 md:gap-8 w-max">
+              {products?.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
             </div>
-            
-            <Button
-              size="icon"
-              variant="outline"
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 z-10 bg-background/90 backdrop-blur-sm border-border shadow-lg hidden sm:flex"
-              onClick={() => scroll('right')}
-              data-testid="button-scroll-right"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </Button>
           </div>
         )}
       </div>

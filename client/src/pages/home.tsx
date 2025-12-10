@@ -346,7 +346,7 @@ const ProductCard = memo(function ProductCard({ product }: { product: Product })
   const { addItem } = useCart();
 
   return (
-    <Card className="group overflow-visible bg-card border-card-border transition-all duration-300 hover:-translate-y-1">
+    <Card className="group overflow-visible bg-card border-card-border transition-all duration-300 hover:-translate-y-1 flex-shrink-0 w-[280px] sm:w-[300px]">
       <div className="aspect-[4/5] overflow-hidden rounded-t-lg">
         <img
           src={product.image}
@@ -394,10 +394,12 @@ const ProductsSection = memo(function ProductsSection() {
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {products?.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+          <div className="overflow-x-auto pb-4 -mx-4 px-4 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 scrollbar-thin">
+            <div className="flex gap-6 md:gap-8 w-max">
+              {products?.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
           </div>
         )}
       </div>
